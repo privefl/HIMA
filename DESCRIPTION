@@ -20,6 +20,7 @@ Collate:
     utils.R
     simHIMA.R
     hima.R
+    hima_rec.R
     HIMA-package.R
 LazyData: false
 RoxygenNote: 6.0.1
