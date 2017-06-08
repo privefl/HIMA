@@ -28,18 +28,22 @@ hima_rec <- function(X, Y, M, COV = NULL,
                      keep.all.first = TRUE,
                      ...) {
   
-  # retrieve the arguments
-  args <- as.list(environment())
-  args$maxiter <- NULL
-  args$threshold <- NULL
-  
   markers <- colnames(M)
   outliers.all <- character()
   
   it <- 1
   conv <- FALSE
   while (!conv && it <= maxiter) {
-    obj.hima <- do.call("hima", args)
+    obj.hima <- hima(
+      X = X, Y = Y, M = M, COV = COV, 
+      family = family, 
+      penalty = penalty, 
+      topN = topN, 
+      parallel = parallel, 
+      ncore = ncore, 
+      verbose = verbose, 
+      ...
+    )
     if (it == 1 && keep.all.first) {
       outliers <- row.names(obj.hima)
     } else {
@@ -48,12 +52,12 @@ hima_rec <- function(X, Y, M, COV = NULL,
     print(outliers)
     outliers.all <- c(outliers.all, outliers)
     is.outlier <- markers %in% outliers
-    if (is.null(args$COV)) {
-      args$COV <- args$M[, is.outlier, drop = FALSE]
+    if (is.null(COV)) {
+      COV <- M[, is.outlier, drop = FALSE]
     } else {
-      args$COV <- cbind(args$COV, args$M[, is.outlier, drop = FALSE])
+      COV <- cbind(COV, M[, is.outlier, drop = FALSE])
     }
-    args$M <- args$M[, !is.outlier, drop = FALSE]
+    M <- M[, !is.outlier, drop = FALSE]
     conv <- (length(outliers) == 0)
     it <- it + 1
     markers <- setdiff(markers, outliers)
