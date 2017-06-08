@@ -43,6 +43,8 @@ no parallel computating is allowed.}
 
 \item{threshold}{Threshold on p-values to be considered as significant.}
 
+\item{keep.all.first}{Do not use threshold on the first round?}
+
 \item{...}{other arguments passed to \code{\link{ncvreg}}.}
 }
 \value{

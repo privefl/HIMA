@@ -12,6 +12,7 @@
 #' @inheritParams hima
 #' @param maxiter Number of maximum iterations.
 #' @param threshold Threshold on p-values to be considered as significant.
+#' @param keep.all.first Do not use threshold on the first round?
 #'
 #' @return The list of markers that are considered significant.
 #' @export
